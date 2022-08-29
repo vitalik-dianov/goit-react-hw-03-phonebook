@@ -17,6 +17,17 @@ export class App extends React.Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const parsedLS = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedLS) {
+      this.setState({ contacts: parsedLS });
+    }
+  }
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts)
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   handleSubmit = (values, { resetForm }) => {
     const arr = this.state.contacts.map(el => {
       return el;
